@@ -24,13 +24,14 @@ var renderCloud = function (ctx, x, y, color) {
 var getElementMax = function (arr) {
   var maxElement = arr[0];
   for (var j = 0; j < arr.length - 1; j++) {
-    if (arr[j] > maxElement) {
+    if (arr[j] > maxElement) { 
         maxElement = arr[j];
     };
   };
   return maxElement;
 };
 
+var barColor = [];
 
 
 window.renderStatistics = function(ctx, names, times) {
@@ -43,11 +44,17 @@ window.renderStatistics = function(ctx, names, times) {
   ctx.font = '16px PT Mono';
   ctx.fillText('Ура Вы победили!', cloudX + gap, 50);
   ctx.fillText('Список результатов:', cloudX + gap, 80);
-
-  for (var i = 0; i < names.length - 1; i++) {
+  
+  
+  for (var i = 0; i <= names.length - 1; i++) {
+    ctx.fillStyle = '#000';
     ctx.fillText(names[i], cloudX + gap + (gap + barWidth + textWidth) * i, cloudY + cloudHeigth - gap);
-    ctx.fillRect(cloudX + gap + (gap + barWidth + textWidth) * i, cloudHeigth - gap - fontGap - 50, barWidth, barHeigth * times[i] / maxTime);//по Y+ растет сверху вниз, нужно разбираться
-  };         
+    ctx.fillText(Math.round(times[i]), cloudX + gap + (gap + barWidth + textWidth) * i, cloudY + 100);
+    if (names[i] == "Вы") {
+    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    };
+    ctx.fillRect(cloudX + gap + (gap + barWidth + textWidth) * i, cloudHeigth - ((barHeigth * times[i] / maxTime) - 30) - gap - fontGap, barWidth, (barHeigth * times[i] / maxTime) - 30);    
+};         
 };
 
 
