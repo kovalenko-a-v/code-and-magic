@@ -20,6 +20,10 @@ var renderCloud = function (ctx, x, y, color) {
     ctx.fillRect(x, y, cloudWidth, cloudHeigth); 
 };
 
+var randomNumber = function (a,b) {
+    return Math.random(a - b)
+};
+
 
 var getElementMax = function (arr) {
   var maxElement = arr[0];
@@ -45,13 +49,23 @@ window.renderStatistics = function(ctx, names, times) {
   ctx.fillText('Ура Вы победили!', cloudX + gap, 50);
   ctx.fillText('Список результатов:', cloudX + gap, 80);
   
+  var arrColor = ['rgba(10, 0, 228, 1)', 'rgba(10, 0, 228, 0.9)', 'rgba(10, 0, 228, 0.7)', 'rgba(10, 0, 228, 0.3)', 'rgba(10, 0, 228, 0.4)', 'rgba(10, 0, 228, 0.6)',];
   
   for (var i = 0; i <= names.length - 1; i++) {
+    var colorRandomElement = function (arrColor) {
+        var rand = Math.floor(Math.random() * arrColor.length);
+         return arrColor[rand];
+      };
+
+    var otherColor = colorRandomElement(arrColor);
+
     ctx.fillStyle = '#000';
     ctx.fillText(names[i], cloudX + gap + (gap + barWidth + textWidth) * i, cloudY + cloudHeigth - gap);
     ctx.fillText(Math.round(times[i]), cloudX + gap + (gap + barWidth + textWidth) * i, cloudY + 100);
     if (names[i] == "Вы") {
     ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+    } else {
+        ctx.fillStyle = otherColor;
     };
     ctx.fillRect(cloudX + gap + (gap + barWidth + textWidth) * i, cloudHeigth - ((barHeigth * times[i] / maxTime) - 30) - gap - fontGap, barWidth, (barHeigth * times[i] / maxTime) - 30);    
 };         
